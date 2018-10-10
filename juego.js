@@ -1,11 +1,15 @@
 //-------------------------------------------------------------
 //Accion para saltar
 
+console.log(navigator);
+
 document.addEventListener("keyup", salta);
 function salta(evento)
 {
 	if(evento.keyCode == 32)
 	{
+		inicio = true;
+
 		if(nivel.muerto == false)
 		{
 			saltar();
@@ -26,7 +30,7 @@ function salta(evento)
 //-------------------------------------------------------------
 //Cargar Imagenes
 
-var imgKnigth, imgSuelo, imgSlime;
+var imgKnigth, imgFondo, imgSuelo, imgSlime;
 
 function cargaImagenes(){
 	imgKnigth = new Image();
@@ -232,13 +236,24 @@ function colision()
 //-------------------------------------------------------------
 // Puntuacion
 
+var inicio = false;
+
 function puntuacion()
 {
 	ctx.font = "40px VT323";
 	ctx.fillStyle = '#ffffff';
 	ctx.fillText(`${nivel.puntuacion}`,600,50);
 
-	if(nivel.muerto == true)
+	if(nivel.muerto == true && inicio == false)
+	{
+		ctx.font = "60px VT323";
+		ctx.fillText(`NUEVO JUEGO`,225,150);
+		nivel.velocidad = 0;
+		fondo.velocidad = 0;
+		console.log(inicio);
+
+	}
+	if(nivel.muerto == true && inicio == true)
 	{
 		ctx.font = "60px VT323";
 		ctx.fillText(`GAME OVER`,235,150);
