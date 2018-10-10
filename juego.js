@@ -201,6 +201,11 @@ function logicaSuelo()
 //-------------------------------------------------------------
 //Colision
 
+var puntuacionActual;
+var puntuacionMaxima = 0;
+var puntuacionDiv = document.getElementById("puntuacion");
+var puntuacionMaximaDiv = document.getElementById("puntuacionMaxima");
+
 function colision()
 {
 
@@ -213,6 +218,13 @@ function colision()
 			fondo.velocidad = 0;
 			imgKnigth.src = 'img/muerto.png';
 			imgSlime.src = '';
+			puntuacionActual = nivel.puntuacion
+			puntuacionDiv.textContent = "Puntuación actual: " + puntuacionActual;
+			if(puntuacionActual > puntuacionMaxima)
+			{
+				puntuacionMaxima = puntuacionActual;
+				puntuacionMaximaDiv.textContent = "Puntuación máxima: " + puntuacionMaxima;
+			}
 		}
 	}
 }
