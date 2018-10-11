@@ -1,15 +1,15 @@
 //-------------------------------------------------------------
 //Accion para saltar
 
-console.log(navigator);
 
 document.addEventListener("keyup", salta);
+document.addEventListener("mouseup", saltaMouse);
+
 function salta(evento)
 {
 	if(evento.keyCode == 32)
 	{
 		inicio = true;
-
 		if(nivel.muerto == false)
 		{
 			saltar();
@@ -24,6 +24,26 @@ function salta(evento)
 			imgKnigth.src = 'img/knight.png';
 			imgSlime.src = 'img/slime.png';
 		}
+	}
+}
+
+function saltaMouse(evento)
+{
+	inicio = true;
+
+	if(nivel.muerto == false)
+	{
+		saltar();
+	}
+	else
+	{
+		nivel.velocidad = 4;
+		fondo.velocidad = 0.5;
+		nivel.muerto = false;
+		slime.x = ancho + 100;
+		nivel.puntuacion = 0;
+		imgKnigth.src = 'img/knight.png';
+		imgSlime.src = 'img/slime.png';
 	}
 }
 
@@ -168,7 +188,10 @@ function logicaSlime()
 	{
 		slime.x = ancho + 100;
 		nivel.puntuacion++;
-		nivel.velocidad ++;
+		if(nivel.velocidad <= 28)
+		{
+			nivel.velocidad ++;
+		}
 	}
 	else
 	{
@@ -237,6 +260,8 @@ function colision()
 // Puntuacion
 
 var inicio = false;
+var medium = document.getElementById("medium");
+var small = document.getElementById("small");
 
 function puntuacion()
 {
@@ -250,15 +275,27 @@ function puntuacion()
 		ctx.fillText(`NUEVO JUEGO`,225,150);
 		nivel.velocidad = 0;
 		fondo.velocidad = 0;
-		console.log(inicio);
 
 	}
+
 	if(nivel.muerto == true && inicio == true)
 	{
 		ctx.font = "60px VT323";
 		ctx.fillText(`GAME OVER`,235,150);
 		nivel.velocidad = 0;
 		fondo.velocidad = 0;
+	}
+	console.log(nivel.muerto);
+	
+	if(nivel.muerto == true)
+	{
+		medium.textContent = "Pulsa “espacio” para jugar";
+		small.textContent = "Toca la pantalla para jugar";	
+	}
+	else
+	{
+		medium.textContent = "";
+		small.textContent = "";	
 	}
 }
 
