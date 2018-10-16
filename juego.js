@@ -3,7 +3,7 @@
 
 
 document.addEventListener("keyup", salta);
-document.addEventListener("mouseup", saltaMouse);
+document.addEventListener("mousedown", saltaMouse);
 
 function salta(evento)
 {
@@ -22,7 +22,7 @@ function salta(evento)
 			slime.x = ancho + 100;
 			nivel.puntuacion = 0;
 			imgKnigth.src = 'img/knight.png';
-			imgSlime.src = 'img/slime.png';
+			imgSlime.src = 'img/snake.png';
 		}
 	}
 }
@@ -43,7 +43,7 @@ function saltaMouse(evento)
 		slime.x = ancho + 100;
 		nivel.puntuacion = 0;
 		imgKnigth.src = 'img/knight.png';
-		imgSlime.src = 'img/slime.png';
+		imgSlime.src = 'img/snake.png';
 	}
 }
 
@@ -61,7 +61,7 @@ function cargaImagenes(){
 	imgKnigth.src = 'img/knight.png';
 	imgFondo.src = 'img/fondo.png';
 	imgSuelo.src = 'img/suelo.png';
-	imgSlime.src = 'img/slime.png';
+	imgSlime.src = 'img/snake.png';
 }
 
 //-------------------------------------------------------------
@@ -84,6 +84,16 @@ function borrarCanvas()
 	canvas.width = ancho;
 	canvas.height = alto;
 }
+
+//-------------------------------------------------------------
+// Aleatorio
+
+function aleatorio(min, maxi)
+{
+	var resultado;
+	resultado = Math.floor(Math.random() * (7 - 1 + 1)) + 1;
+	return resultado;
+};
 
 //-------------------------------------------------------------
 // Caballero, variables y funciones
@@ -165,6 +175,8 @@ function logicaFondo()
 //-------------------------------------------------------------
 // Slime, variables y funciones
 
+var valor = 1;
+
 var nivel = {
 	velocidad: 4,
 	puntuacion: 0,
@@ -188,6 +200,8 @@ function logicaSlime()
 	{
 		slime.x = ancho + 100;
 		nivel.puntuacion++;
+		valor = aleatorio(2, 2);
+		console.log(valor);
 		if(nivel.velocidad <= 28)
 		{
 			nivel.velocidad ++;
@@ -230,8 +244,6 @@ function logicaSuelo()
 
 var puntuacionActual;
 var puntuacionMaxima = 0;
-var puntuacionDiv = document.getElementById("puntuacion");
-var puntuacionMaximaDiv = document.getElementById("puntuacionMaxima");
 
 function colision()
 {
@@ -245,12 +257,11 @@ function colision()
 			fondo.velocidad = 0;
 			imgKnigth.src = 'img/muerto.png';
 			imgSlime.src = '';
-			puntuacionActual = nivel.puntuacion
-			puntuacionDiv.textContent = "Puntuación actual: " + puntuacionActual;
+
+			puntuacionActual = nivel.puntuacion;
 			if(puntuacionActual > puntuacionMaxima)
 			{
 				puntuacionMaxima = puntuacionActual;
-				puntuacionMaximaDiv.textContent = "Puntuación máxima: " + puntuacionMaxima;
 			}
 		}
 	}
@@ -262,17 +273,19 @@ function colision()
 var inicio = false;
 var medium = document.getElementById("medium");
 var small = document.getElementById("small");
+var over = document.getElementById("over");
 
 function puntuacion()
 {
+
 	ctx.font = "40px VT323";
 	ctx.fillStyle = '#ffffff';
-	ctx.fillText(`${nivel.puntuacion}`,600,50);
+	ctx.fillText(`${nivel.puntuacion} HI ${puntuacionMaxima}`,550,50);
 
 	if(nivel.muerto == true && inicio == false)
 	{
 		ctx.font = "60px VT323";
-		ctx.fillText(`NUEVO JUEGO`,225,150);
+		ctx.fillText(`NUEVO JUEGO`,220,150);
 		nivel.velocidad = 0;
 		fondo.velocidad = 0;
 
@@ -280,22 +293,54 @@ function puntuacion()
 
 	if(nivel.muerto == true && inicio == true)
 	{
+		switch (valor) {
+		case 1:
+		ctx.font = "30px VT323";
+		ctx.fillText(`Solo tienes que saltar, no es tan difícil`,110,150);
+		break;
+		case 2:
+		ctx.font = "40px VT323";
+		ctx.fillText(`La próxima vez utilizare mi espada`,80,150);
+		break;
+		case 3:
+		ctx.font = "40px VT323";
+		ctx.fillText(`Así nunca rescatare a la princesa`,90,150);
+		break;
+		case 4:
 		ctx.font = "60px VT323";
-		ctx.fillText(`GAME OVER`,235,150);
+		ctx.fillText(`LOOOOOOOOOOOOOOOOOSER`,100,150);
+		break;
+		case 5:
+		ctx.font = "40px VT323";
+		ctx.fillText(`¿Acaso crees que tengo vidas infinitas?`,50,150);
+		break;
+		case 6:
+		ctx.font = "60px VT323";
+		ctx.fillText(`YOU DIED`,250,150);
+		break;
+		case 7:
+		ctx.font = "40px VT323";
+		ctx.fillText(`SNAKE? SNAAAAAAAAAAAAAAAKE!`,150,150);
+		break;
+		}
 		nivel.velocidad = 0;
 		fondo.velocidad = 0;
 	}
-	console.log(nivel.muerto);
 	
 	if(nivel.muerto == true)
 	{
 		medium.textContent = "Pulsa “espacio” para jugar";
-		small.textContent = "Toca la pantalla para jugar";	
+		small.textContent = "Toca la pantalla para jugar";
+		if(inicio == true)
+		{
+			over.textContent = "GAME OVER";		
+		}
 	}
 	else
 	{
 		medium.textContent = "";
 		small.textContent = "";	
+		over.textContent = "";	
 	}
 }
 
