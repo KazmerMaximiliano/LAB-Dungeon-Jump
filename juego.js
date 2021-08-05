@@ -69,7 +69,7 @@ function cargaImagenes(){
 
 var ancho = 700;
 var alto = 300;
-var canvas,ctx;
+var canvas, ctx;
 
 function iniciar()
 {
@@ -271,9 +271,6 @@ function colision()
 // Puntuacion
 
 var inicio = false;
-var medium = document.getElementById("medium");
-var small = document.getElementById("small");
-var over = document.getElementById("over");
 
 function puntuacion()
 {
@@ -286,6 +283,8 @@ function puntuacion()
 	{
 		ctx.font = "60px VT323";
 		ctx.fillText(`NUEVO JUEGO`,220,150);
+		ctx.font = "24px VT323";
+		ctx.fillText(`Presiona espacio o toca la pantalla para jugar`,140, 190);
 		nivel.velocidad = 0;
 		fondo.velocidad = 0;
 
@@ -325,22 +324,6 @@ function puntuacion()
 		}
 		nivel.velocidad = 0;
 		fondo.velocidad = 0;
-	}
-	
-	if(nivel.muerto == true)
-	{
-		medium.textContent = "Pulsa “espacio” para jugar";
-		small.textContent = "Toca la pantalla para jugar";
-		if(inicio == true)
-		{
-			over.textContent = "GAME OVER";		
-		}
-	}
-	else
-	{
-		medium.textContent = "";
-		small.textContent = "";	
-		over.textContent = "";	
 	}
 }
 

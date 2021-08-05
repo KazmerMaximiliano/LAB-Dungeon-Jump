@@ -1,0 +1,38 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+.game-container {
+    width: 100%;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    background-color: #00020A;
+}
+
+.game-container canvas {
+    border:4px solid #ffffff;
+}
+
+.game-container .server-info {
+    font-family: 'VT323';
+    font-size: 24px;
+    color: white;
+    margin-top: 32px;
+}
+
+@media (max-width: 700px) {
+    .game-container canvas {
+        transform: scale(65%);
+    }
+}
+
+@media (max-width: 450px) {
+    .game-container canvas {
+        transform: scale(40%);
+    }
+}
